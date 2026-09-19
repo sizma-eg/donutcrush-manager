@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Donut Crush | Owner Dashboard</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -28,7 +29,7 @@ body{
   font-family:Tahoma,Arial,sans-serif
 }
 
-button,input,textarea{font:inherit}
+button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 
 .container{
@@ -118,6 +119,11 @@ button{cursor:pointer}
   background:var(--pink);
   color:#fff;
   font-weight:bold
+}
+
+.submit:disabled{
+  opacity:.7;
+  cursor:not-allowed
 }
 
 .error{
@@ -434,6 +440,10 @@ main{
   width:auto
 }
 
+.new-category{
+  margin-top:8px
+}
+
 .toast{
   position:fixed;
   bottom:20px;
@@ -455,9 +465,11 @@ main{
 }
 
 /* ORDERS */
+
 .orders-section{
   margin-top:30px;
 }
+
 .orders-head{
   display:flex;
   align-items:end;
@@ -465,8 +477,18 @@ main{
   gap:15px;
   margin-bottom:15px;
 }
-.orders-head h2{margin:0;font-size:22px}
-.orders-head p{margin:6px 0 0;color:var(--muted);font-size:11px}
+
+.orders-head h2{
+  margin:0;
+  font-size:22px
+}
+
+.orders-head p{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:11px
+}
+
 .refresh-orders{
   border:1px solid var(--line);
   background:#fff;
@@ -474,39 +496,136 @@ main{
   border-radius:11px;
   padding:9px 12px;
   font-size:10px;
-  font-weight:bold;
+  font-weight:bold
 }
-.orders{display:grid;gap:12px}
+
+.orders{
+  display:grid;
+  gap:12px
+}
+
 .order-card{
   background:#fff;
   border:1px solid var(--line);
   border-radius:17px;
-  padding:15px;
+  padding:15px
 }
-.order-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.order-number{font-weight:900;font-size:15px}
-.order-date{color:var(--muted);font-size:9px;margin-top:4px}
+
+.order-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px
+}
+
+.order-number{
+  font-weight:900;
+  font-size:15px
+}
+
+.order-date{
+  color:var(--muted);
+  font-size:9px;
+  margin-top:4px
+}
+
 .order-status{
-  border:0;border-radius:20px;padding:6px 10px;font-size:9px;font-weight:bold;
-  background:#fff2d8;color:#9a6818;
+  border:0;
+  border-radius:20px;
+  padding:6px 10px;
+  font-size:9px;
+  font-weight:bold;
+  background:#fff2d8;
+  color:#9a6818
 }
-.order-status.done{background:#e7f8ef;color:#27845b}
-.order-status.cancelled{background:#fcebed;color:var(--danger)}
-.order-body{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px;margin-top:14px}
-.order-label{font-size:9px;color:var(--muted);margin-bottom:5px}
-.order-value{font-size:11px;line-height:1.7;word-break:break-word}
-.order-items{margin-top:12px;border-top:1px solid var(--line);padding-top:11px}
-.order-item{display:flex;justify-content:space-between;gap:10px;font-size:10px;padding:4px 0}
-.order-total{display:flex;justify-content:space-between;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-weight:900;color:#df5e80}
-.order-actions{display:flex;gap:8px;margin-top:12px}
-.order-actions select{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;color:var(--brown);font-size:10px}
-.order-actions button{border:0;border-radius:10px;padding:8px 12px;background:var(--pink2);color:#d65d7b;font-size:10px;font-weight:bold}
+
+.order-status.done{
+  background:#e7f8ef;
+  color:#27845b
+}
+
+.order-status.cancelled{
+  background:#fcebed;
+  color:var(--danger)
+}
+
+.order-body{
+  display:grid;
+  grid-template-columns:1.2fr 1fr 1fr;
+  gap:14px;
+  margin-top:14px
+}
+
+.order-label{
+  font-size:9px;
+  color:var(--muted);
+  margin-bottom:5px
+}
+
+.order-value{
+  font-size:11px;
+  line-height:1.7;
+  word-break:break-word
+}
+
+.order-items{
+  margin-top:12px;
+  border-top:1px solid var(--line);
+  padding-top:11px
+}
+
+.order-item{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  font-size:10px;
+  padding:4px 0
+}
+
+.order-total{
+  display:flex;
+  justify-content:space-between;
+  margin-top:9px;
+  padding-top:9px;
+  border-top:1px dashed var(--line);
+  font-weight:900;
+  color:#df5e80
+}
+
+.order-actions{
+  display:flex;
+  gap:8px;
+  margin-top:12px
+}
+
+.order-actions select{
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:8px 10px;
+  background:#fff;
+  color:var(--brown);
+  font-size:10px
+}
+
+.order-actions button{
+  border:0;
+  border-radius:10px;
+  padding:8px 12px;
+  background:var(--pink2);
+  color:#d65d7b;
+  font-size:10px;
+  font-weight:bold
+}
 
 @media(max-width:850px){
+
   .products{
     grid-template-columns:repeat(2,1fr)
   }
-  .order-body{grid-template-columns:1fr 1fr}
+
+  .order-body{
+    grid-template-columns:1fr 1fr
+  }
 }
 
 @media(max-width:600px){
@@ -540,9 +659,18 @@ main{
     grid-template-columns:1fr
   }
 
-  .order-body{grid-template-columns:1fr}
-  .orders-head{align-items:stretch;flex-direction:column}
-  .refresh-orders{width:100%}
+  .order-body{
+    grid-template-columns:1fr
+  }
+
+  .orders-head{
+    align-items:stretch;
+    flex-direction:column
+  }
+
+  .refresh-orders{
+    width:100%
+  }
 
   .full{
     grid-column:auto
@@ -687,15 +815,32 @@ main{
 
     <div id="products" class="products"></div>
 
+
     <section class="orders-section">
+
       <div class="orders-head">
+
         <div>
+
           <h2>الطلبات 📦</h2>
-          <p>الأوردرات الجديدة بتظهر هنا تلقائيًا.</p>
+
+          <p>
+            الأوردرات الجديدة بتظهر هنا تلقائيًا.
+          </p>
+
         </div>
-        <button class="refresh-orders" onclick="loadOrders()">↻ تحديث الطلبات</button>
+
+        <button
+          class="refresh-orders"
+          onclick="loadOrders()"
+        >
+          ↻ تحديث الطلبات
+        </button>
+
       </div>
+
       <div id="orders" class="orders"></div>
+
     </section>
 
   </div>
@@ -776,7 +921,8 @@ main{
 
         </div>
 
-   <!-- IMAGE UPLOAD -->
+
+        <!-- IMAGE UPLOAD -->
 
         <div class="field">
 
@@ -801,17 +947,35 @@ main{
               margin-top:8px;
               display:none
             "
-          >
+          ></div>
 
+        </div>
+
+
+        <!-- CATEGORY -->
 
         <div class="field">
 
           <label>التصنيف</label>
 
+          <select id="productCategory">
+
+            <option value="">
+              اختر التصنيف
+            </option>
+
+            <option value="__new__">
+              ➕ إضافة تصنيف جديد
+            </option>
+
+          </select>
+
           <input
-            id="productCategory"
+            id="newProductCategory"
+            class="new-category"
             maxlength="60"
-            placeholder="دونات"
+            placeholder="اكتب اسم التصنيف الجديد"
+            style="display:none"
           >
 
         </div>
@@ -883,7 +1047,10 @@ const OWNER_PASSWORD = "choco.donut";
 ========================= */
 
 let products = [];
+
 let orders = [];
+
+let categories = [];
 
 
 /* =========================
@@ -952,7 +1119,11 @@ function showDashboard(){
     OWNER_USERNAME;
 
   loadProducts();
+
+  loadCategories();
+
   loadOrders();
+
   subscribeToOrders();
 }
 
@@ -1138,6 +1309,140 @@ async function loadProducts(){
 
 
 /* =========================
+   LOAD CATEGORIES
+========================= */
+
+async function loadCategories(){
+
+  const {
+    data,
+    error
+  } = await db
+    .from("Products")
+    .select("category");
+
+
+  if(error){
+
+    console.error(
+      "Categories error:",
+      error
+    );
+
+    return;
+  }
+
+
+  categories = [
+    ...new Set(
+      (data || [])
+        .map(
+          x =>
+            String(
+              x.category || ""
+            ).trim()
+        )
+        .filter(Boolean)
+    )
+  ];
+
+
+  renderCategoryOptions();
+
+}
+
+
+/* =========================
+   RENDER CATEGORY OPTIONS
+========================= */
+
+function renderCategoryOptions(){
+
+  const select =
+    $("productCategory");
+
+  if(!select) return;
+
+
+  const currentValue =
+    select.value;
+
+
+  select.innerHTML = `
+
+    <option value="">
+      اختر التصنيف
+    </option>
+
+    ${
+      categories
+        .map(category => `
+          <option value="${esc(category)}">
+            ${esc(category)}
+          </option>
+        `)
+        .join("")
+    }
+
+    <option value="__new__">
+      ➕ إضافة تصنيف جديد
+    </option>
+
+  `;
+
+
+  if(
+    currentValue &&
+    categories.includes(currentValue)
+  ){
+
+    select.value =
+      currentValue;
+
+  }
+
+}
+
+
+/* =========================
+   CATEGORY CHANGE
+========================= */
+
+$("productCategory").addEventListener(
+  "change",
+  function(){
+
+    const newInput =
+      $("newProductCategory");
+
+
+    if(this.value === "__new__"){
+
+      newInput.style.display =
+        "block";
+
+      newInput.required =
+        true;
+
+      newInput.focus();
+
+    }else{
+
+      newInput.style.display =
+        "none";
+
+      newInput.required =
+        false;
+
+      newInput.value = "";
+
+    }
+
+  }
+);
+
+
+/* =========================
    RENDER PRODUCTS
 ========================= */
 
@@ -1246,7 +1551,7 @@ function renderProducts(){
 
             <button
               class="edit"
-              onclick="openEdit('${String(p.id).replace(/'/g,"\\'")}')"
+              onclick="openEdit('${String(p.id).replace(/'/g,"\\'") }')"
             >
               ✏️ تعديل
             </button>
@@ -1254,7 +1559,7 @@ function renderProducts(){
 
             <button
               class="delete"
-              onclick="deleteProduct('${String(p.id).replace(/'/g,"\\'")}')"
+              onclick="deleteProduct('${String(p.id).replace(/'/g,"\\'") }')"
             >
               🗑️ حذف
             </button>
@@ -1279,20 +1584,41 @@ async function loadOrders(){
   $("orders").innerHTML =
     '<div class="empty">جاري تحميل الطلبات...</div>';
 
-  const {data,error}=await db
+
+  const {
+    data,
+    error
+  } = await db
     .from("orders")
-    .select("id,customer_name,customer_phone,governorate,area,address,notes,items,total,payment_method,status,created_at")
-    .order("created_at",{ascending:false});
+    .select(
+      "id,customer_name,customer_phone,governorate,area,address,notes,items,total,payment_method,status,created_at"
+    )
+    .order(
+      "created_at",
+      {ascending:false}
+    );
+
 
   if(error){
+
     console.error(error);
-    $("orders").innerHTML=
-      `<div class="empty">تعذر تحميل الطلبات.<br><br>راجع صلاحيات جدول orders في Supabase.</div>`;
+
+    $("orders").innerHTML =
+      `<div class="empty">
+        تعذر تحميل الطلبات.
+        <br><br>
+        راجع صلاحيات جدول orders في Supabase.
+      </div>`;
+
     return;
   }
 
-  orders=data || [];
+
+  orders =
+    data || [];
+
   renderOrders();
+
 }
 
 
@@ -1301,76 +1627,336 @@ async function loadOrders(){
 ========================= */
 
 function formatOrderDate(value){
-  const d=new Date(value);
-  if(Number.isNaN(d.getTime())) return "";
-  return d.toLocaleString("ar-EG",{dateStyle:"medium",timeStyle:"short"});
+
+  const d =
+    new Date(value);
+
+  if(
+    Number.isNaN(
+      d.getTime()
+    )
+  ){
+
+    return "";
+
+  }
+
+
+  return d.toLocaleString(
+    "ar-EG",
+    {
+      dateStyle:"medium",
+      timeStyle:"short"
+    }
+  );
+
 }
 
+
 function orderStatusClass(status){
-  if(status==="تم التسليم" || status==="مكتمل") return "done";
-  if(status==="ملغي") return "cancelled";
+
+  if(
+    status === "تم التسليم" ||
+    status === "مكتمل"
+  ){
+
+    return "done";
+
+  }
+
+
+  if(
+    status === "ملغي"
+  ){
+
+    return "cancelled";
+
+  }
+
+
   return "";
+
 }
+
 
 function renderOrders(){
 
-  const box=$("orders");
+  const box =
+    $("orders");
+
 
   if(!orders.length){
-    box.innerHTML=`<div class="empty">📦<br><br>مفيش طلبات لسه.</div>`;
+
+    box.innerHTML =
+      `<div class="empty">
+        📦
+        <br><br>
+        مفيش طلبات لسه.
+      </div>`;
+
     return;
   }
 
-  box.innerHTML=orders.map(o=>{
-    let items=[];
-    try{items=Array.isArray(o.items)?o.items:JSON.parse(o.items||"[]")}catch(_){items=[]}
-    const itemRows=items.map(item=>`
-      <div class="order-item">
-        <span>${esc(item.name||"منتج")} × ${esc(item.quantity ?? item.qty ?? 1)}</span>
-        <b>${money(item.subtotal ?? ((Number(item.price)||0)*(Number(item.quantity ?? item.qty)||1)))}</b>
-      </div>
-    `).join("");
 
-    return `
-      <article class="order-card">
-        <div class="order-top">
-          <div>
-            <div class="order-number">طلب #${esc(o.id)}</div>
-            <div class="order-date">${esc(formatOrderDate(o.created_at))}</div>
-          </div>
-          <span class="order-status ${orderStatusClass(o.status)}">${esc(o.status||"جديد")}</span>
-        </div>
+  box.innerHTML =
+    orders.map(o => {
 
-        <div class="order-body">
-          <div>
-            <div class="order-label">بيانات العميل</div>
-            <div class="order-value"><b>${esc(o.customer_name)}</b><br>📞 ${esc(o.customer_phone)}</div>
-          </div>
-          <div>
-            <div class="order-label">العنوان</div>
-            <div class="order-value">${esc(o.governorate||"-")} — ${esc(o.area||"-")}<br>${esc(o.address||"-")}</div>
-          </div>
-          <div>
-            <div class="order-label">الدفع والملاحظات</div>
-            <div class="order-value">💵 ${esc(o.payment_method||"عند الاستلام")}<br>📝 ${esc(o.notes||"لا يوجد")}</div>
-          </div>
-        </div>
+      let items = [];
 
-        <div class="order-items">
-          <div class="order-label">الطلب</div>
-          ${itemRows || '<div class="order-value">لا توجد تفاصيل منتجات</div>'}
-          <div class="order-total"><span>الإجمالي</span><span>${money(o.total)}</span></div>
-        </div>
+      try{
 
-        <div class="order-actions">
-          <select onchange="updateOrderStatus('${String(o.id).replace(/'/g,"\\'")}',this.value)">
-            ${["جديد","قيد التجهيز","خرج للتوصيل","تم التسليم","ملغي"].map(st=>`<option value="${esc(st)}" ${o.status===st?"selected":""}>${st}</option>`).join("")}
-          </select>
-          <button onclick="deleteOrder('${String(o.id).replace(/'/g,"\\'")}')">🗑️ حذف الطلب</button>
-        </div>
-      </article>
-    `;
-  }).join("");
+        items =
+          Array.isArray(o.items)
+          ?
+          o.items
+          :
+          JSON.parse(
+            o.items || "[]"
+          );
+
+      }catch(_){
+
+        items = [];
+
+      }
+
+
+      const itemRows =
+        items
+          .map(item => `
+
+            <div class="order-item">
+
+              <span>
+                ${esc(item.name || "منتج")}
+                ×
+                ${esc(
+                  item.quantity ??
+                  item.qty ??
+                  1
+                )}
+              </span>
+
+              <b>
+                ${
+                  money(
+                    item.subtotal ??
+                    (
+                      (Number(item.price) || 0) *
+                      (
+                        Number(
+                          item.quantity ??
+                          item.qty
+                        ) || 1
+                      )
+                    )
+                  )
+                }
+              </b>
+
+            </div>
+
+          `)
+          .join("");
+
+
+      return `
+
+        <article class="order-card">
+
+          <div class="order-top">
+
+            <div>
+
+              <div class="order-number">
+                طلب #${esc(o.id)}
+              </div>
+
+              <div class="order-date">
+                ${esc(
+                  formatOrderDate(
+                    o.created_at
+                  )
+                )}
+              </div>
+
+            </div>
+
+            <span
+              class="order-status ${orderStatusClass(o.status)}"
+            >
+              ${esc(
+                o.status ||
+                "جديد"
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="order-body">
+
+            <div>
+
+              <div class="order-label">
+                بيانات العميل
+              </div>
+
+              <div class="order-value">
+
+                <b>
+                  ${esc(
+                    o.customer_name
+                  )}
+                </b>
+
+                <br>
+
+                📞
+                ${esc(
+                  o.customer_phone
+                )}
+
+              </div>
+
+            </div>
+
+
+            <div>
+
+              <div class="order-label">
+                العنوان
+              </div>
+
+              <div class="order-value">
+
+                ${esc(
+                  o.governorate ||
+                  "-"
+                )}
+
+                —
+
+                ${esc(
+                  o.area ||
+                  "-"
+                )}
+
+                <br>
+
+                ${esc(
+                  o.address ||
+                  "-"
+                )}
+
+              </div>
+
+            </div>
+
+
+            <div>
+
+              <div class="order-label">
+                الدفع والملاحظات
+              </div>
+
+              <div class="order-value">
+
+                💵
+                ${esc(
+                  o.payment_method ||
+                  "عند الاستلام"
+                )}
+
+                <br>
+
+                📝
+                ${esc(
+                  o.notes ||
+                  "لا يوجد"
+                )}
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="order-items">
+
+            <div class="order-label">
+              الطلب
+            </div>
+
+            ${
+              itemRows ||
+              '<div class="order-value">لا توجد تفاصيل منتجات</div>'
+            }
+
+
+            <div class="order-total">
+
+              <span>
+                الإجمالي
+              </span>
+
+              <span>
+                ${money(o.total)}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="order-actions">
+
+            <select
+              onchange="updateOrderStatus('${String(o.id).replace(/'/g,"\\'")}',this.value)"
+            >
+
+              ${
+                [
+                  "جديد",
+                  "قيد التجهيز",
+                  "خرج للتوصيل",
+                  "تم التسليم",
+                  "ملغي"
+                ]
+                .map(st => `
+                  <option
+                    value="${esc(st)}"
+                    ${
+                      o.status === st
+                      ? "selected"
+                      : ""
+                    }
+                  >
+                    ${st}
+                  </option>
+                `)
+                .join("")
+              }
+
+            </select>
+
+
+            <button
+              onclick="deleteOrder('${String(o.id).replace(/'/g,"\\'") }')"
+            >
+              🗑️ حذف الطلب
+            </button>
+
+          </div>
+
+        </article>
+
+      `;
+
+    })
+    .join("");
+
 }
 
 
@@ -1378,16 +1964,45 @@ function renderOrders(){
    UPDATE ORDER STATUS
 ========================= */
 
-async function updateOrderStatus(id,status){
-  const {error}=await db.from("orders").update({status}).eq("id",id);
+async function updateOrderStatus(
+  id,
+  status
+){
+
+  const {
+    error
+  } =
+    await db
+      .from("orders")
+      .update({
+        status
+      })
+      .eq(
+        "id",
+        id
+      );
+
+
   if(error){
+
     console.error(error);
-    toast("حصل خطأ في تحديث حالة الطلب ❌");
+
+    toast(
+      "حصل خطأ في تحديث حالة الطلب ❌"
+    );
+
     await loadOrders();
+
     return;
   }
-  toast("تم تحديث حالة الطلب ✅");
+
+
+  toast(
+    "تم تحديث حالة الطلب ✅"
+  );
+
   await loadOrders();
+
 }
 
 
@@ -1396,15 +2011,49 @@ async function updateOrderStatus(id,status){
 ========================= */
 
 async function deleteOrder(id){
-  if(!confirm("هل تريد حذف هذا الطلب نهائيًا؟")) return;
-  const {error}=await db.from("orders").delete().eq("id",id);
+
+  if(
+    !confirm(
+      "هل تريد حذف هذا الطلب نهائيًا؟"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const {
+    error
+  } =
+    await db
+      .from("orders")
+      .delete()
+      .eq(
+        "id",
+        id
+      );
+
+
   if(error){
+
     console.error(error);
-    toast("حصل خطأ أثناء حذف الطلب ❌");
+
+    toast(
+      "حصل خطأ أثناء حذف الطلب ❌"
+    );
+
     return;
   }
-  toast("تم حذف الطلب 🗑️");
+
+
+  toast(
+    "تم حذف الطلب 🗑️"
+  );
+
+
   await loadOrders();
+
 }
 
 
@@ -1412,12 +2061,32 @@ async function deleteOrder(id){
    REALTIME ORDERS
 ========================= */
 
-let ordersChannel=null;
+let ordersChannel =
+  null;
+
+
 function subscribeToOrders(){
-  if(ordersChannel) return;
-  ordersChannel=db.channel("donut-crush-orders")
-    .on("postgres_changes",{event:"*",schema:"public",table:"orders"},()=>loadOrders())
-    .subscribe();
+
+  if(ordersChannel)
+    return;
+
+
+  ordersChannel =
+    db
+      .channel(
+        "donut-crush-orders"
+      )
+      .on(
+        "postgres_changes",
+        {
+          event:"*",
+          schema:"public",
+          table:"orders"
+        },
+        () => loadOrders()
+      )
+      .subscribe();
+
 }
 
 
@@ -1434,11 +2103,37 @@ function openAdd(){
   $("productForm").reset();
 
 
-  $("productId").value = "";
+  $("productId").value =
+    "";
 
 
   $("productAvailable").checked =
     true;
+
+
+  $("productImage").value =
+    "";
+
+
+  $("productImageFile").value =
+    "";
+
+
+  $("newProductCategory").value =
+    "";
+
+  $("newProductCategory").style.display =
+    "none";
+
+  $("newProductCategory").required =
+    false;
+
+
+  renderCategoryOptions();
+
+
+  $("productCategory").value =
+    "";
 
 
   $("productModal")
@@ -1462,7 +2157,8 @@ function openEdit(id){
     );
 
 
-  if(!p) return;
+  if(!p)
+    return;
 
 
   $("modalTitle").textContent =
@@ -1474,23 +2170,90 @@ function openEdit(id){
 
 
   $("productName").value =
-    p.name || "";
+    p.name ||
+    "";
 
 
   $("productPrice").value =
-    p.price ?? "";
+    p.price ??
+    "";
 
 
   $("productDescription").value =
-    p.description || "";
+    p.description ||
+    "";
 
 
   $("productImage").value =
-    p.image || "";
+    p.image ||
+    "";
 
 
-  $("productCategory").value =
-    p.category || "دونات";
+  $("productImageFile").value =
+    "";
+
+
+  renderCategoryOptions();
+
+
+  const existingCategory =
+    String(
+      p.category ||
+      ""
+    ).trim();
+
+
+  if(
+    existingCategory &&
+    categories.includes(
+      existingCategory
+    )
+  ){
+
+    $("productCategory").value =
+      existingCategory;
+
+
+    $("newProductCategory").value =
+      "";
+
+    $("newProductCategory").style.display =
+      "none";
+
+    $("newProductCategory").required =
+      false;
+
+  }else if(existingCategory){
+
+    $("productCategory").value =
+      "__new__";
+
+
+    $("newProductCategory").value =
+      existingCategory;
+
+
+    $("newProductCategory").style.display =
+      "block";
+
+    $("newProductCategory").required =
+      true;
+
+  }else{
+
+    $("productCategory").value =
+      "";
+
+    $("newProductCategory").value =
+      "";
+
+    $("newProductCategory").style.display =
+      "none";
+
+    $("newProductCategory").required =
+      false;
+
+  }
 
 
   $("productAvailable").checked =
@@ -1532,7 +2295,8 @@ $("productForm").addEventListener(
       $("saveProduct");
 
 
-    btn.disabled = true;
+    btn.disabled =
+      true;
 
     btn.textContent =
       "جاري الحفظ...";
@@ -1540,43 +2304,79 @@ $("productForm").addEventListener(
 
     const id =
       $("productId")
-      .value
-      .trim();
+        .value
+        .trim();
 
+
+    /* CATEGORY */
+
+    let selectedCategory =
+      $("productCategory")
+        .value;
+
+
+    if(
+      selectedCategory ===
+      "__new__"
+    ){
+
+      selectedCategory =
+        $("newProductCategory")
+          .value
+          .trim();
+
+    }
+
+
+    if(!selectedCategory){
+
+      toast(
+        "اختار تصنيف المنتج أولاً"
+      );
+
+
+      btn.disabled =
+        false;
+
+      btn.textContent =
+        "حفظ المنتج";
+
+      return;
+
+    }
+
+
+    /* PAYLOAD */
 
     const payload = {
 
       name:
         $("productName")
-        .value
-        .trim(),
+          .value
+          .trim(),
 
       description:
         $("productDescription")
-        .value
-        .trim(),
+          .value
+          .trim(),
 
       price:
         Number(
           $("productPrice")
-          .value
+            .value
         ),
 
       image:
         $("productImage")
-        .value
-        .trim(),
+          .value
+          .trim(),
 
       category:
-        $("productCategory")
-        .value
-        .trim()
-        ||
-        "دونات",
+        selectedCategory,
 
       available:
         $("productAvailable")
-        .checked
+          .checked
 
     };
 
@@ -1590,14 +2390,19 @@ $("productForm").addEventListener(
         await db
           .from("Products")
           .update(payload)
-          .eq("id",id);
+          .eq(
+            "id",
+            id
+          );
 
     }else{
 
       result =
         await db
           .from("Products")
-          .insert(payload);
+          .insert(
+            payload
+          );
 
     }
 
@@ -1614,12 +2419,28 @@ $("productForm").addEventListener(
       );
 
 
-      btn.disabled = false;
+      btn.disabled =
+        false;
 
       btn.textContent =
         "حفظ المنتج";
 
       return;
+    }
+
+
+    /* ADD NEW CATEGORY LOCALLY */
+
+    if(
+      !categories.includes(
+        selectedCategory
+      )
+    ){
+
+      categories.push(
+        selectedCategory
+      );
+
     }
 
 
@@ -1637,8 +2458,11 @@ $("productForm").addEventListener(
 
     await loadProducts();
 
+    await loadCategories();
 
-    btn.disabled = false;
+
+    btn.disabled =
+      false;
 
     btn.textContent =
       "حفظ المنتج";
@@ -1661,7 +2485,8 @@ async function deleteProduct(id){
     );
 
 
-  if(!p) return;
+  if(!p)
+    return;
 
 
   if(
@@ -1675,11 +2500,16 @@ async function deleteProduct(id){
   }
 
 
-  const {error} =
+  const {
+    error
+  } =
     await db
       .from("Products")
       .delete()
-      .eq("id",id);
+      .eq(
+        "id",
+        id
+      );
 
 
   if(error){
@@ -1701,7 +2531,30 @@ async function deleteProduct(id){
 
   await loadProducts();
 
+  await loadCategories();
+
 }
+
+
+/* =========================
+   CLOSE MODAL WHEN CLICK OUTSIDE
+========================= */
+
+$("productModal").addEventListener(
+  "click",
+  function(e){
+
+    if(
+      e.target ===
+      $("productModal")
+    ){
+
+      closeModal();
+
+    }
+
+  }
+);
 
 
 /* =========================
