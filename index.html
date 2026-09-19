@@ -28,24 +28,17 @@ body{
   font-family:Tahoma,Arial,sans-serif
 }
 
-button,input,textarea,select{
-  font:inherit
-}
-
-button{
-  cursor:pointer
-}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
 
 .container{
   width:min(1120px,calc(100% - 28px));
   margin:auto
 }
 
-.hidden{
-  display:none!important
-}
+.hidden{display:none!important}
 
-/* Login */
+/* LOGIN */
 
 .login-page{
   min-height:100vh;
@@ -135,7 +128,7 @@ button{
   margin:10px 0
 }
 
-/* Dashboard */
+/* DASHBOARD */
 
 header{
   background:#fff;
@@ -176,13 +169,9 @@ header{
   gap:10px
 }
 
-.owner-email{
+.owner-name{
   font-size:10px;
-  color:var(--muted);
-  max-width:220px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap
+  color:var(--muted)
 }
 
 .logout{
@@ -376,7 +365,7 @@ main{
   font-size:12px
 }
 
-/* Modal */
+/* MODAL */
 
 .modal{
   position:fixed;
@@ -465,10 +454,59 @@ main{
   transform:none
 }
 
+/* ORDERS */
+.orders-section{
+  margin-top:30px;
+}
+.orders-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:15px;
+}
+.orders-head h2{margin:0;font-size:22px}
+.orders-head p{margin:6px 0 0;color:var(--muted);font-size:11px}
+.refresh-orders{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--brown);
+  border-radius:11px;
+  padding:9px 12px;
+  font-size:10px;
+  font-weight:bold;
+}
+.orders{display:grid;gap:12px}
+.order-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:15px;
+}
+.order-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.order-number{font-weight:900;font-size:15px}
+.order-date{color:var(--muted);font-size:9px;margin-top:4px}
+.order-status{
+  border:0;border-radius:20px;padding:6px 10px;font-size:9px;font-weight:bold;
+  background:#fff2d8;color:#9a6818;
+}
+.order-status.done{background:#e7f8ef;color:#27845b}
+.order-status.cancelled{background:#fcebed;color:var(--danger)}
+.order-body{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px;margin-top:14px}
+.order-label{font-size:9px;color:var(--muted);margin-bottom:5px}
+.order-value{font-size:11px;line-height:1.7;word-break:break-word}
+.order-items{margin-top:12px;border-top:1px solid var(--line);padding-top:11px}
+.order-item{display:flex;justify-content:space-between;gap:10px;font-size:10px;padding:4px 0}
+.order-total{display:flex;justify-content:space-between;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-weight:900;color:#df5e80}
+.order-actions{display:flex;gap:8px;margin-top:12px}
+.order-actions select{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;color:var(--brown);font-size:10px}
+.order-actions button{border:0;border-radius:10px;padding:8px 12px;background:var(--pink2);color:#d65d7b;font-size:10px;font-weight:bold}
+
 @media(max-width:850px){
   .products{
     grid-template-columns:repeat(2,1fr)
   }
+  .order-body{grid-template-columns:1fr 1fr}
 }
 
 @media(max-width:600px){
@@ -477,7 +515,7 @@ main{
     width:min(100% - 20px,1120px)
   }
 
-  .owner-email{
+  .owner-name{
     display:none
   }
 
@@ -502,6 +540,10 @@ main{
     grid-template-columns:1fr
   }
 
+  .order-body{grid-template-columns:1fr}
+  .orders-head{align-items:stretch;flex-direction:column}
+  .refresh-orders{width:100%}
+
   .full{
     grid-column:auto
   }
@@ -510,6 +552,8 @@ main{
 </head>
 
 <body>
+
+<!-- LOGIN -->
 
 <section id="loginPage" class="login-page">
 
@@ -525,14 +569,14 @@ main{
 
       <div class="field">
 
-        <label>البريد الإلكتروني</label>
+        <label>اسم المستخدم</label>
 
         <input
-          id="loginEmail"
-          type="email"
-          autocomplete="email"
+          id="loginUsername"
+          type="text"
+          autocomplete="username"
           required
-          placeholder="owner@example.com"
+          placeholder="crush.time"
         >
 
       </div>
@@ -564,6 +608,8 @@ main{
 </section>
 
 
+<!-- DASHBOARD -->
+
 <div id="dashboardPage" class="hidden">
 
 <header>
@@ -571,13 +617,18 @@ main{
   <div class="container nav">
 
     <div class="brand">
+
       <span class="brand-logo">🍩</span>
+
       Donut Crush Dashboard
+
     </div>
 
     <div class="owner">
 
-      <span id="ownerEmail" class="owner-email"></span>
+      <span id="ownerName" class="owner-name">
+        crush.time
+      </span>
 
       <button class="logout" onclick="logout()">
         تسجيل الخروج
@@ -616,13 +667,19 @@ main{
     <div class="stats">
 
       <div class="stat">
+
         <span>إجمالي المنتجات</span>
+
         <b id="totalProducts">0</b>
+
       </div>
 
       <div class="stat">
+
         <span>المنتجات المتاحة</span>
+
         <b id="availableProducts">0</b>
+
       </div>
 
     </div>
@@ -630,12 +687,25 @@ main{
 
     <div id="products" class="products"></div>
 
+    <section class="orders-section">
+      <div class="orders-head">
+        <div>
+          <h2>الطلبات 📦</h2>
+          <p>الأوردرات الجديدة بتظهر هنا تلقائيًا.</p>
+        </div>
+        <button class="refresh-orders" onclick="loadOrders()">↻ تحديث الطلبات</button>
+      </div>
+      <div id="orders" class="orders"></div>
+    </section>
+
   </div>
 
 </main>
 
 </div>
 
+
+<!-- PRODUCT MODAL -->
 
 <div id="productModal" class="modal">
 
@@ -656,7 +726,10 @@ main{
 
     <form id="productForm">
 
-      <input id="productId" type="hidden">
+      <input
+        id="productId"
+        type="hidden"
+      >
 
 
       <div class="form-grid">
@@ -703,63 +776,42 @@ main{
 
         </div>
 
+   <!-- IMAGE UPLOAD -->
 
         <div class="field">
 
-          <label>رابط الصورة</label>
+          <label>صورة المنتج</label>
+
+          <input
+            id="productImageFile"
+            type="file"
+            accept="image/*"
+          >
+
+          <!-- يحتفظ برابط الصورة في حالة تعديل منتج قديم -->
 
           <input
             id="productImage"
-            type="url"
-            placeholder="https://..."
+            type="hidden"
           >
 
-        </div>
+          <div
+            id="productImagePreview"
+            style="
+              margin-top:8px;
+              display:none
+            "
+          >
 
 
         <div class="field">
 
           <label>التصنيف</label>
 
-          <select id="productCategory">
-
-            <option value="">اختر التصنيف</option>
-
-            <option value="شيكولاتة">🍫 شيكولاتة</option>
-
-            <option value="لوتس">🍪 لوتس</option>
-
-            <option value="فراولة">🍓 فراولة</option>
-
-            <option value="كلاسيك">🤎 كلاسيك</option>
-
-            <option value="كيندر">🍫 كيندر</option>
-
-            <option value="كراميل">🍯 كراميل</option>
-
-            <option value="اوريو">🍪 أوريو</option>
-
-            <option value="مخصوص">⭐ مخصوص</option>
-
-            <option value="__new__">➕ إضافة تصنيف جديد</option>
-
-          </select>
-
-        </div>
-
-
-        <div
-          class="field full"
-          id="newCategoryField"
-          style="display:none"
-        >
-
-          <label>اسم التصنيف الجديد</label>
-
           <input
-            id="newProductCategory"
+            id="productCategory"
             maxlength="60"
-            placeholder="اكتب اسم التصنيف الجديد"
+            placeholder="دونات"
           >
 
         </div>
@@ -800,238 +852,322 @@ main{
 
 <script>
 
-const SUPABASE_URL="https://euvcfvsejcsoympamjub.supabase.co";
+/* =========================
+   SUPABASE
+========================= */
 
-const SUPABASE_KEY="sb_publishable_hct8gjRVMCj2L59vI46Yag_VuXReOdU";
+const SUPABASE_URL =
+  "https://euvcfvsejcsoympamjub.supabase.co";
 
-const db=window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const SUPABASE_KEY =
+  "sb_publishable_hct8gjRVMCj2L59vI46Yag_VuXReOdU";
+
+const db =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
-let products=[];
+/* =========================
+   OWNER LOGIN
+========================= */
 
-const $=id=>document.getElementById(id);
+const OWNER_USERNAME = "crush.time";
 
-const esc=x=>String(x??"").replace(
-  /[&<>"']/g,
-  m=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#039;"
-  }[m])
-);
+const OWNER_PASSWORD = "choco.donut";
 
-const money=n=>
-  Number(n||0).toLocaleString("ar-EG")+" ج.م";
 
+/* =========================
+   VARIABLES
+========================= */
+
+let products = [];
+let orders = [];
+
+
+/* =========================
+   HELPERS
+========================= */
+
+const $ = id =>
+  document.getElementById(id);
+
+
+const esc = x =>
+  String(x ?? "").replace(
+    /[&<>"']/g,
+    m => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[m])
+  );
+
+
+const money = n =>
+  Number(n || 0).toLocaleString("ar-EG")
+  + " ج.م";
+
+
+/* =========================
+   TOAST
+========================= */
 
 function toast(msg){
 
-  const t=$("toast");
+  const t = $("toast");
 
-  t.textContent=msg;
+  t.textContent = msg;
 
   t.classList.add("show");
 
   clearTimeout(window.toastTimer);
 
-  window.toastTimer=setTimeout(
-    ()=>t.classList.remove("show"),
-    2200
-  );
-
+  window.toastTimer =
+    setTimeout(
+      () => t.classList.remove("show"),
+      2200
+    );
 }
 
 
-function showDashboard(user){
+/* =========================
+   SHOW DASHBOARD
+========================= */
 
-  $("loginPage").classList.add("hidden");
+function showDashboard(){
 
-  $("dashboardPage").classList.remove("hidden");
+  $("loginPage")
+    .classList
+    .add("hidden");
 
-  $("ownerEmail").textContent=
-    user?.email||"Owner";
+  $("dashboardPage")
+    .classList
+    .remove("hidden");
+
+  $("ownerName").textContent =
+    OWNER_USERNAME;
 
   loadProducts();
+  loadOrders();
+  subscribeToOrders();
+}
+
+
+/* =========================
+   SHOW LOGIN
+========================= */
+
+function showLogin(){
+
+  $("dashboardPage")
+    .classList
+    .add("hidden");
+
+  $("loginPage")
+    .classList
+    .remove("hidden");
 
 }
 
 
-async function checkSession(){
-
-  const {
-    data:{session}
-  }=await db.auth.getSession();
-
-  if(session?.user){
-
-    showDashboard(session.user);
-
-  }else{
-
-    $("loginPage").classList.remove("hidden");
-
-    $("dashboardPage").classList.add("hidden");
-
-  }
-
-}
-
+/* =========================
+   LOGIN
+========================= */
 
 $("loginForm").addEventListener(
   "submit",
-  async e=>{
+  function(e){
 
     e.preventDefault();
 
-    const errorBox=$("loginError");
+    const username =
+      $("loginUsername")
+      .value
+      .trim();
 
-    const btn=e.currentTarget.querySelector(
-      "button[type=submit]"
-    );
+    const password =
+      $("loginPassword")
+      .value;
 
-    errorBox.textContent="";
+    const errorBox =
+      $("loginError");
 
-    btn.disabled=true;
+    const btn =
+      e.currentTarget
+      .querySelector(
+        "button[type=submit]"
+      );
 
-    btn.textContent="جاري الدخول...";
+    errorBox.textContent = "";
+
+    btn.disabled = true;
+
+    btn.textContent =
+      "جاري الدخول...";
 
 
-    const {data,error}=
-      await db.auth.signInWithPassword({
+    if(
+      username === OWNER_USERNAME &&
+      password === OWNER_PASSWORD
+    ){
 
-        email:$("loginEmail").value.trim(),
+      localStorage.setItem(
+        "donut_crush_owner_auth",
+        "true"
+      );
 
-        password:$("loginPassword").value
 
-      });
+      $("loginForm").reset();
 
 
-    if(error){
+      btn.disabled = false;
 
-      errorBox.textContent=
-        "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+      btn.textContent =
+        "دخول لوحة التحكم";
 
-      btn.disabled=false;
 
-      btn.textContent="دخول لوحة التحكم";
+      showDashboard();
 
-      return;
+
+    }else{
+
+      errorBox.textContent =
+        "اسم المستخدم أو كلمة المرور غير صحيحة.";
+
+      btn.disabled = false;
+
+      btn.textContent =
+        "دخول لوحة التحكم";
 
     }
-
-
-    btn.disabled=false;
-
-    btn.textContent="دخول لوحة التحكم";
-
-    showDashboard(data.user);
 
   }
 );
 
 
-async function logout(){
+/* =========================
+   LOGOUT
+========================= */
 
-  await db.auth.signOut();
+function logout(){
 
-  $("dashboardPage").classList.add("hidden");
+  localStorage.removeItem(
+    "donut_crush_owner_auth"
+  );
 
-  $("loginPage").classList.remove("hidden");
+  $("loginUsername").value = "";
 
-  $("loginPassword").value="";
+  $("loginPassword").value = "";
+
+  showLogin();
+}
+
+
+/* =========================
+   CHECK LOGIN
+========================= */
+
+function checkOwnerLogin(){
+
+  const loggedIn =
+    localStorage.getItem(
+      "donut_crush_owner_auth"
+    );
+
+  if(loggedIn === "true"){
+
+    showDashboard();
+
+  }else{
+
+    showLogin();
+
+  }
 
 }
 
 
-db.auth.onAuthStateChange(
-  (_event,session)=>{
-
-    if(session?.user){
-
-      $("loginPage").classList.add("hidden");
-
-      $("dashboardPage").classList.remove("hidden");
-
-      $("ownerEmail").textContent=
-        session.user.email||"Owner";
-
-    }else{
-
-      $("dashboardPage").classList.add("hidden");
-
-      $("loginPage").classList.remove("hidden");
-
-    }
-
-  }
-);
-
+/* =========================
+   LOAD PRODUCTS
+========================= */
 
 async function loadProducts(){
 
-  $("products").innerHTML=
+  $("products").innerHTML =
     '<div class="empty">جاري تحميل المنتجات...</div>';
 
 
-  const {data,error}=
-    await db
-      .from("Products")
-      .select(
-        "id,name,description,price,image,available,created_at,category"
-      )
-      .order(
-        "created_at",
-        {ascending:false}
-      );
+  const {
+    data,
+    error
+  } = await db
+    .from("Products")
+    .select(
+      "id,name,description,price,image,available,created_at,category"
+    )
+    .order(
+      "created_at",
+      {ascending:false}
+    );
 
 
   if(error){
 
     console.error(error);
 
-    $("products").innerHTML=
-      '<div class="empty">تعذر تحميل المنتجات.<br>راجع صلاحيات جدول Products في Supabase.</div>';
+    $("products").innerHTML =
+      `<div class="empty">
+        تعذر تحميل المنتجات.
+        <br><br>
+        راجع صلاحيات جدول Products في Supabase.
+      </div>`;
 
     return;
-
   }
 
 
-  products=data||[];
+  products = data || [];
 
   renderProducts();
 
 }
 
 
+/* =========================
+   RENDER PRODUCTS
+========================= */
+
 function renderProducts(){
 
-  $("totalProducts").textContent=
+  $("totalProducts").textContent =
     products.length;
 
-  $("availableProducts").textContent=
+
+  $("availableProducts").textContent =
     products.filter(
-      p=>p.available!==false
+      p => p.available !== false
     ).length;
 
 
   if(!products.length){
 
-    $("products").innerHTML=
-      '<div class="empty">🍩<br><br>لا توجد منتجات حتى الآن.</div>';
+    $("products").innerHTML =
+      `<div class="empty">
+        🍩
+        <br><br>
+        لا توجد منتجات حتى الآن.
+      </div>`;
 
     return;
-
   }
 
 
-  $("products").innerHTML=
-    products.map(p=>`
+  $("products").innerHTML =
+    products.map(p => `
 
       <article class="card">
 
@@ -1049,8 +1185,18 @@ function renderProducts(){
             `<span class="emoji">🍩</span>`
           }
 
-          <span class="status ${p.available===false?"off":""}">
-            ${p.available===false?"غير متاح":"متاح"}
+          <span
+            class="status ${
+              p.available === false
+              ? "off"
+              : ""
+            }"
+          >
+            ${
+              p.available === false
+              ? "غير متاح"
+              : "متاح"
+            }
           </span>
 
         </div>
@@ -1062,8 +1208,14 @@ function renderProducts(){
             ${esc(p.name)}
           </h3>
 
+
           <p class="desc">
-            ${esc(p.description||"بدون وصف")}
+            ${
+              esc(
+                p.description ||
+                "بدون وصف"
+              )
+            }
           </p>
 
 
@@ -1074,9 +1226,17 @@ function renderProducts(){
             </span>
 
             <span
-              style="font-size:9px;color:#927875"
+              style="
+                font-size:9px;
+                color:#927875
+              "
             >
-              ${esc(p.category||"دونات")}
+              ${
+                esc(
+                  p.category ||
+                  "دونات"
+                )
+              }
             </span>
 
           </div>
@@ -1110,185 +1270,313 @@ function renderProducts(){
 }
 
 
+/* =========================
+   LOAD ORDERS
+========================= */
+
+async function loadOrders(){
+
+  $("orders").innerHTML =
+    '<div class="empty">جاري تحميل الطلبات...</div>';
+
+  const {data,error}=await db
+    .from("orders")
+    .select("id,customer_name,customer_phone,governorate,area,address,notes,items,total,payment_method,status,created_at")
+    .order("created_at",{ascending:false});
+
+  if(error){
+    console.error(error);
+    $("orders").innerHTML=
+      `<div class="empty">تعذر تحميل الطلبات.<br><br>راجع صلاحيات جدول orders في Supabase.</div>`;
+    return;
+  }
+
+  orders=data || [];
+  renderOrders();
+}
+
+
+/* =========================
+   RENDER ORDERS
+========================= */
+
+function formatOrderDate(value){
+  const d=new Date(value);
+  if(Number.isNaN(d.getTime())) return "";
+  return d.toLocaleString("ar-EG",{dateStyle:"medium",timeStyle:"short"});
+}
+
+function orderStatusClass(status){
+  if(status==="تم التسليم" || status==="مكتمل") return "done";
+  if(status==="ملغي") return "cancelled";
+  return "";
+}
+
+function renderOrders(){
+
+  const box=$("orders");
+
+  if(!orders.length){
+    box.innerHTML=`<div class="empty">📦<br><br>مفيش طلبات لسه.</div>`;
+    return;
+  }
+
+  box.innerHTML=orders.map(o=>{
+    let items=[];
+    try{items=Array.isArray(o.items)?o.items:JSON.parse(o.items||"[]")}catch(_){items=[]}
+    const itemRows=items.map(item=>`
+      <div class="order-item">
+        <span>${esc(item.name||"منتج")} × ${esc(item.quantity ?? item.qty ?? 1)}</span>
+        <b>${money(item.subtotal ?? ((Number(item.price)||0)*(Number(item.quantity ?? item.qty)||1)))}</b>
+      </div>
+    `).join("");
+
+    return `
+      <article class="order-card">
+        <div class="order-top">
+          <div>
+            <div class="order-number">طلب #${esc(o.id)}</div>
+            <div class="order-date">${esc(formatOrderDate(o.created_at))}</div>
+          </div>
+          <span class="order-status ${orderStatusClass(o.status)}">${esc(o.status||"جديد")}</span>
+        </div>
+
+        <div class="order-body">
+          <div>
+            <div class="order-label">بيانات العميل</div>
+            <div class="order-value"><b>${esc(o.customer_name)}</b><br>📞 ${esc(o.customer_phone)}</div>
+          </div>
+          <div>
+            <div class="order-label">العنوان</div>
+            <div class="order-value">${esc(o.governorate||"-")} — ${esc(o.area||"-")}<br>${esc(o.address||"-")}</div>
+          </div>
+          <div>
+            <div class="order-label">الدفع والملاحظات</div>
+            <div class="order-value">💵 ${esc(o.payment_method||"عند الاستلام")}<br>📝 ${esc(o.notes||"لا يوجد")}</div>
+          </div>
+        </div>
+
+        <div class="order-items">
+          <div class="order-label">الطلب</div>
+          ${itemRows || '<div class="order-value">لا توجد تفاصيل منتجات</div>'}
+          <div class="order-total"><span>الإجمالي</span><span>${money(o.total)}</span></div>
+        </div>
+
+        <div class="order-actions">
+          <select onchange="updateOrderStatus('${String(o.id).replace(/'/g,"\\'")}',this.value)">
+            ${["جديد","قيد التجهيز","خرج للتوصيل","تم التسليم","ملغي"].map(st=>`<option value="${esc(st)}" ${o.status===st?"selected":""}>${st}</option>`).join("")}
+          </select>
+          <button onclick="deleteOrder('${String(o.id).replace(/'/g,"\\'")}')">🗑️ حذف الطلب</button>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+
+/* =========================
+   UPDATE ORDER STATUS
+========================= */
+
+async function updateOrderStatus(id,status){
+  const {error}=await db.from("orders").update({status}).eq("id",id);
+  if(error){
+    console.error(error);
+    toast("حصل خطأ في تحديث حالة الطلب ❌");
+    await loadOrders();
+    return;
+  }
+  toast("تم تحديث حالة الطلب ✅");
+  await loadOrders();
+}
+
+
+/* =========================
+   DELETE ORDER
+========================= */
+
+async function deleteOrder(id){
+  if(!confirm("هل تريد حذف هذا الطلب نهائيًا؟")) return;
+  const {error}=await db.from("orders").delete().eq("id",id);
+  if(error){
+    console.error(error);
+    toast("حصل خطأ أثناء حذف الطلب ❌");
+    return;
+  }
+  toast("تم حذف الطلب 🗑️");
+  await loadOrders();
+}
+
+
+/* =========================
+   REALTIME ORDERS
+========================= */
+
+let ordersChannel=null;
+function subscribeToOrders(){
+  if(ordersChannel) return;
+  ordersChannel=db.channel("donut-crush-orders")
+    .on("postgres_changes",{event:"*",schema:"public",table:"orders"},()=>loadOrders())
+    .subscribe();
+}
+
+
+/* =========================
+   ADD PRODUCT
+========================= */
+
 function openAdd(){
 
-  $("modalTitle").textContent=
+  $("modalTitle").textContent =
     "إضافة منتج";
+
 
   $("productForm").reset();
 
-  $("productId").value="";
 
-  $("productAvailable").checked=true;
+  $("productId").value = "";
 
-  $("newCategoryField").style.display="none";
 
-  $("newProductCategory").value="";
+  $("productAvailable").checked =
+    true;
 
-  $("productModal").classList.add("show");
+
+  $("productModal")
+    .classList
+    .add("show");
 
 }
 
+
+/* =========================
+   EDIT PRODUCT
+========================= */
 
 function openEdit(id){
 
-  const p=products.find(
-    x=>String(x.id)===String(id)
-  );
+  const p =
+    products.find(
+      x =>
+        String(x.id) ===
+        String(id)
+    );
 
-  if(!p)return;
+
+  if(!p) return;
 
 
-  $("modalTitle").textContent=
+  $("modalTitle").textContent =
     "تعديل المنتج";
 
-  $("productId").value=p.id;
 
-  $("productName").value=p.name||"";
-
-  $("productPrice").value=
-    p.price??"";
-
-  $("productDescription").value=
-    p.description||"";
-
-  $("productImage").value=
-    p.image||"";
+  $("productId").value =
+    p.id;
 
 
-  const categories=[
-    "شيكولاتة",
-    "لوتس",
-    "فراولة",
-    "كلاسيك",
-    "كيندر",
-    "كراميل",
-    "اوريو",
-    "مخصوص"
-  ];
+  $("productName").value =
+    p.name || "";
 
 
-  if(categories.includes(p.category)){
-
-    $("productCategory").value=
-      p.category;
-
-    $("newCategoryField").style.display=
-      "none";
-
-    $("newProductCategory").value="";
-
-  }else{
-
-    $("productCategory").value=
-      "__new__";
-
-    $("newCategoryField").style.display=
-      "block";
-
-    $("newProductCategory").value=
-      p.category||"";
-
-  }
+  $("productPrice").value =
+    p.price ?? "";
 
 
-  $("productAvailable").checked=
-    p.available!==false;
+  $("productDescription").value =
+    p.description || "";
 
-  $("productModal").classList.add("show");
+
+  $("productImage").value =
+    p.image || "";
+
+
+  $("productCategory").value =
+    p.category || "دونات";
+
+
+  $("productAvailable").checked =
+    p.available !== false;
+
+
+  $("productModal")
+    .classList
+    .add("show");
 
 }
 
+
+/* =========================
+   CLOSE MODAL
+========================= */
 
 function closeModal(){
 
-  $("productModal").classList.remove("show");
+  $("productModal")
+    .classList
+    .remove("show");
 
 }
 
 
-$("productCategory").addEventListener(
-  "change",
-  function(){
-
-    if(this.value==="__new__"){
-
-      $("newCategoryField").style.display=
-        "block";
-
-      $("newProductCategory").focus();
-
-    }else{
-
-      $("newCategoryField").style.display=
-        "none";
-
-      $("newProductCategory").value="";
-
-    }
-
-  }
-);
-
+/* =========================
+   SAVE PRODUCT
+========================= */
 
 $("productForm").addEventListener(
   "submit",
-  async e=>{
+  async function(e){
 
     e.preventDefault();
 
-    const btn=$("saveProduct");
 
-    btn.disabled=true;
-
-    btn.textContent="جاري الحفظ...";
+    const btn =
+      $("saveProduct");
 
 
-    const id=$("productId").value.trim();
+    btn.disabled = true;
+
+    btn.textContent =
+      "جاري الحفظ...";
 
 
-    let category=
-      $("productCategory").value.trim();
+    const id =
+      $("productId")
+      .value
+      .trim();
 
 
-    if(category==="__new__"){
-
-      category=
-        $("newProductCategory")
-          .value
-          .trim();
-
-    }
-
-
-    const payload={
+    const payload = {
 
       name:
         $("productName")
-          .value
-          .trim(),
+        .value
+        .trim(),
 
       description:
         $("productDescription")
-          .value
-          .trim(),
+        .value
+        .trim(),
 
       price:
         Number(
-          $("productPrice").value
+          $("productPrice")
+          .value
         ),
 
       image:
         $("productImage")
-          .value
-          .trim(),
+        .value
+        .trim(),
 
       category:
-        category||"شيكولاتة",
+        $("productCategory")
+        .value
+        .trim()
+        ||
+        "دونات",
 
       available:
         $("productAvailable")
-          .checked
+        .checked
 
     };
 
@@ -1298,7 +1586,7 @@ $("productForm").addEventListener(
 
     if(id){
 
-      result=
+      result =
         await db
           .from("Products")
           .update(payload)
@@ -1306,7 +1594,7 @@ $("productForm").addEventListener(
 
     }else{
 
-      result=
+      result =
         await db
           .from("Products")
           .insert(payload);
@@ -1316,23 +1604,27 @@ $("productForm").addEventListener(
 
     if(result.error){
 
-      console.error(result.error);
+      console.error(
+        result.error
+      );
+
 
       toast(
         "حصل خطأ أثناء حفظ المنتج"
       );
 
-      btn.disabled=false;
 
-      btn.textContent=
+      btn.disabled = false;
+
+      btn.textContent =
         "حفظ المنتج";
 
       return;
-
     }
 
 
     closeModal();
+
 
     toast(
       id
@@ -1346,32 +1638,44 @@ $("productForm").addEventListener(
     await loadProducts();
 
 
-    btn.disabled=false;
+    btn.disabled = false;
 
-    btn.textContent=
+    btn.textContent =
       "حفظ المنتج";
 
   }
 );
 
 
+/* =========================
+   DELETE PRODUCT
+========================= */
+
 async function deleteProduct(id){
 
-  const p=products.find(
-    x=>String(x.id)===String(id)
-  );
+  const p =
+    products.find(
+      x =>
+        String(x.id) ===
+        String(id)
+    );
 
-  if(!p)return;
+
+  if(!p) return;
 
 
   if(
     !confirm(
       `هل تريد حذف "${p.name}" نهائياً؟`
     )
-  )return;
+  ){
+
+    return;
+
+  }
 
 
-  const {error}=
+  const {error} =
     await db
       .from("Products")
       .delete()
@@ -1387,7 +1691,6 @@ async function deleteProduct(id){
     );
 
     return;
-
   }
 
 
@@ -1395,12 +1698,17 @@ async function deleteProduct(id){
     "تم حذف المنتج 🗑️"
   );
 
+
   await loadProducts();
 
 }
 
 
-checkSession();
+/* =========================
+   START
+========================= */
+
+checkOwnerLogin();
 
 </script>
 
